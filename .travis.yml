@@ -31,6 +31,7 @@ install:
   # Create conda environment
   - conda env create -f environment.yml
   - source activate metal
+  - conda install cudatoolkit=9.0
   - export LD_LIBRARY_PATH="$HOME/miniconda/envs/metal/lib:$LD_LIBRARY_PATH"
 
   # Add metal/ to PYTHONPATH
