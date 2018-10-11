@@ -44,7 +44,7 @@ class DependencyLearner():
         deps_singleton = deps
         return deps_singleton
     
-    def _rpca(self,thresh=1.0,delta=1e-5):
+    def _rpca(self,thresh=1.0,delta=1e-3):
         lam = 1/np.sqrt(self.m)
         z_hat, J_hat, L_rec, opt_error = self._run_optimization(self.Oinv, delta, lam)
         
