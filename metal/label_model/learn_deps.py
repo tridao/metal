@@ -1,6 +1,8 @@
 import numpy as np
 import cvxpy as cp
 from metal.label_model.utils import *
+from itertools import combinations, product
+
 
 class DependencyLearner():
     """A DependencyLearner TEMP VERSION
@@ -31,7 +33,16 @@ class DependencyLearner():
         for i,j in deps_all:
             if i < j:
                 deps.append((i,j))
-        return deps
+
+        #HACK: forcing singleton separators
+        cluster_lfs = [element for tupl in deps for element in tupl]
+        deps_singleton = []
+        for comb in combinations(cluster_lfs, 2):
+            if comb[0] < comb[1]:
+                deps_singleton.append(comb)
+
+        deps_singleton = deps
+        return deps_singleton
     
     def _rpca(self,thresh=1.0,delta=1e-5):
         lam = 1/np.sqrt(self.m)
