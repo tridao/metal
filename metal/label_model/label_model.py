@@ -6,12 +6,12 @@ import numpy as np
 import torch
 import torch.nn as nn
 from scipy.sparse import issparse
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, TensorDataset
 
 from metal.classifier import Classifier
 from metal.label_model.graph_utils import get_clique_tree
 from metal.label_model.lm_defaults import lm_default_config
-from metal.utils import MetalDataset, recursive_merge_dicts
+from metal.utils import recursive_merge_dicts
 
 
 class LabelModel(Classifier):
@@ -429,7 +429,7 @@ class LabelModel(Classifier):
         # Creating this faux dataset is necessary for now because the LabelModel
         # loss functions do not accept inputs, but Classifer._train_model()
         # expects training data to feed to the loss functions.
-        dataset = MetalDataset([0], [0])
+        dataset = TensorDataset(torch.tensor([0]), torch.tensor([0]))
         train_loader = DataLoader(dataset)
         if self.inv_form:
             # Compute O, O^{-1}, and initialize params

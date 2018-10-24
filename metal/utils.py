@@ -9,28 +9,6 @@ from time import strftime
 import numpy as np
 import torch
 from scipy.sparse import issparse
-from torch.utils.data import Dataset
-
-
-class MetalDataset(Dataset):
-    """A dataset that group each item in X with it label from Y
-
-    Args:
-        X: an n-dim iterable of items
-        Y: a torch.Tensor of labels
-            This may be hard labels [n] or soft labels [n, k]
-    """
-
-    def __init__(self, X, Y):
-        self.X = X
-        self.Y = Y
-        assert len(X) == len(Y)
-
-    def __getitem__(self, index):
-        return tuple([self.X[index], self.Y[index]])
-
-    def __len__(self):
-        return len(self.X)
 
 
 class Checkpointer(object):

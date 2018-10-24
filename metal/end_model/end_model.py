@@ -1,12 +1,13 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from torch.utils.data import TensorDataset
 
 from metal.classifier import Classifier
 from metal.end_model.em_defaults import em_default_config
 from metal.end_model.loss import SoftCrossEntropyLoss
 from metal.modules import IdentityModule
-from metal.utils import MetalDataset, hard_to_soft, recursive_merge_dicts
+from metal.utils import hard_to_soft, recursive_merge_dicts
 
 
 class EndModel(Classifier):
@@ -179,7 +180,7 @@ class EndModel(Classifier):
         return Y
 
     def _create_dataset(self, *data):
-        return MetalDataset(*data)
+        return TensorDataset(*data)
 
     def _get_loss_fn(self):
         if self.config["use_cuda"]:
